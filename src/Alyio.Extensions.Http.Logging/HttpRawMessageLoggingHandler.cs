@@ -37,6 +37,7 @@ namespace Alyio.Extensions.Http.Logging
         {
             if (_logger.IsEnabled(_loggingOptions.Level))
             {
+                _logger.RequestQueue(_loggingOptions.Level, Interlocked.Increment(ref _activeRequestCount));
                 return SendCoreAsync(request, cancellationToken);
             }
             else
@@ -50,8 +51,6 @@ namespace Alyio.Extensions.Http.Logging
         /// </summary>
         private async Task<HttpResponseMessage> SendCoreAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            _logger.RequestQueue(_loggingOptions.Level, Interlocked.Increment(ref _activeRequestCount));
-
             var watch = Stopwatch.StartNew();
             string requestRawMessage = await request.ReadRawMessageAsync(
                 _loggingOptions.IgnoreRequestContent, _loggingOptions.IgnoreRequestHeaders, _loggingOptions.RedactRequestHeaders, cancellationToken);

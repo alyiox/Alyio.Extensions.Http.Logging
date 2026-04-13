@@ -20,7 +20,7 @@ This library provides the ground-truth of HTTP communication, which is useful fo
 -   **Highly Configurable:** Fine-tune logging with options to ignore specific headers or content, and control log levels.
 -   **Sensitive Data Redaction:** Automatically redact sensitive information from headers (like `Authorization` tokens) to keep logs secure.
 -   **Targeted Logging:** Apply logging to all `HttpClient` instances in an application or target specific named clients for granular control.
--   **Broad .NET Support:** Compatible with .NET 6.0, 8.0, 9.0 and 10.0.
+-   **Broad .NET Support:** Compatible with .NET 8.0, 9.0 and 10.0.
 
 ## Installation
 
