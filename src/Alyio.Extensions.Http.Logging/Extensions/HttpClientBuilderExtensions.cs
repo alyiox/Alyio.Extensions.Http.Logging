@@ -1,7 +1,6 @@
 ﻿// MIT License
 
 using Alyio.Extensions.Http.Logging;
-using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -32,18 +31,11 @@ public static class HttpClientBuilderExtensions
             configureOptions?.Invoke(options);
         });
 
-#if NET8_0_OR_GREATER
         builder.ConfigureAdditionalHttpMessageHandlers((handlers, services) =>
         {
             HttpRawMessageLoggingHandler handler = BuildRawMessageLoggingHandler(services, builder.Name);
             handlers.Add(handler);
         });
-#else
-        builder.Services.Configure<HttpClientFactoryOptions>(builder.Name, options =>
-        {
-            options.HttpMessageHandlerBuilderActions.Add(AddHttpRawMessageLoggingHandler);
-        });
-#endif
 
         return builder;
     }
@@ -58,7 +50,6 @@ public static class HttpClientBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-#if NET8_0_OR_GREATER
         _ = builder.ConfigureAdditionalHttpMessageHandlers(static (handlers, _) =>
         {
             for (int i = handlers.Count - 1; i >= 0; i--)
@@ -69,19 +60,6 @@ public static class HttpClientBuilderExtensions
                 }
             }
         });
-#else
-        _ = builder.Services.Configure<HttpClientFactoryOptions>(builder.Name, options =>
-        {
-            for (int i = options.HttpMessageHandlerBuilderActions.Count - 1; i >= 0; i--)
-            {
-                Action<HttpMessageHandlerBuilder> action = options.HttpMessageHandlerBuilderActions[i];
-                if (action.Method.Name == nameof(AddHttpRawMessageLoggingHandler))
-                {
-                    options.HttpMessageHandlerBuilderActions.RemoveAt(i);
-                }
-            }
-        });
-#endif
 
         return builder;
     }
@@ -96,12 +74,4 @@ public static class HttpClientBuilderExtensions
         var handler = new HttpRawMessageLoggingHandler(logger, options);
         return handler;
     }
-
-#if !NET8_0_OR_GREATER
-    private static void AddHttpRawMessageLoggingHandler(HttpMessageHandlerBuilder b)
-    {
-        HttpRawMessageLoggingHandler handler = BuildRawMessageLoggingHandler(b.Services, b.Name!);
-        b.AdditionalHandlers.Add(handler);
-    }
-#endif
 }

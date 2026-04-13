@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 
 var services = new ServiceCollection();
 
-#if NET8_0_OR_GREATER
 services.ConfigureHttpClientDefaults(builder =>
 {
     builder.AddHttpRawMessageLogging(options =>
@@ -15,24 +14,11 @@ services.ConfigureHttpClientDefaults(builder =>
         options.IgnoreResponseContent = false;
     });
 });
-#endif
 
-#if NET8_0_OR_GREATER
 services.AddHttpClient<IHttpBinService, HttpBinService>(client =>
 {
     client.BaseAddress = new Uri("https://httpbin.org");
 });
-#else
-services.AddHttpClient<IHttpBinService, HttpBinService>(client =>
-{
-    client.BaseAddress = new Uri("https://httpbin.org");
-})
-.AddHttpRawMessageLogging(options =>
-{
-    options.IgnoreRequestContent = false;
-    options.IgnoreResponseContent = false;
-});
-#endif
 
 services.AddLogging(builder =>
 {

@@ -263,9 +263,8 @@ public sealed class HttpClientBuilderExtensionsTests
         }
     }
 
-#if NET8_0_OR_GREATER
     /// <summary>
-    /// Tests for ConfigureHttpClientDefaults functionality (NET 8.0+ only).
+    /// Tests for ConfigureHttpClientDefaults functionality.
     /// </summary>
     [Trait("Category", "HttpClientBuilder.Extensions.ConfigureHttpClientDefaults")]
     public class ConfigureHttpClientDefaultsTests
@@ -330,7 +329,6 @@ public sealed class HttpClientBuilderExtensionsTests
             Assert.Empty(loggingHandlers2);
         }
     }
-#endif
 
     /// <summary>
     /// Helper method to get all delegating handlers from an HTTP client builder.
