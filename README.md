@@ -44,7 +44,7 @@ builder.Services.ConfigureHttpClientDefaults(builder =>
     builder.AddHttpRawMessageLogging(options =>
     {
         options.CategoryName = "MyCustomCategory";
-        options.LogLevel = LogLevel.Information;
+        options.Level = LogLevel.Information;
         options.IgnoreRequestContent = false;
         options.IgnoreResponseContent = false;
         options.IgnoreRequestHeaders = new[] { "User-Agent" };
