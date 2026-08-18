@@ -2,6 +2,7 @@
 
 [![Build Status](https://github.com/alyiox/Alyio.Extensions.Http.Logging/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/alyiox/Alyio.Extensions.Http.Logging/actions/workflows/ci.yml)
 ![NuGet Version](https://img.shields.io/nuget/v/alyio.extensions.http.logging)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 **Alyio.Extensions.Http.Logging** is a .NET library that provides deep visibility into the HTTP and HTTPS traffic in applications. It extends `HttpClientHandler` to provide detailed, raw logging of HTTP requests and responses.
 
