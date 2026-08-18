@@ -1,4 +1,4 @@
-name: Alyio.Extensions.Http.Logging
+name: ci
 
 on:
   push:
